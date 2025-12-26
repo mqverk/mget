@@ -1,0 +1,29 @@
+# Build artifacts
+*.o
+*.a
+*.so
+*.dylib
+mget
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Downloaded files
+*.jar
+
+# Compilation database
+compile_commands.json
+
+# CMake (if used in future)
+CMakeFiles/
+cmake_build_debug/
+cmake_build_release/
+
+# Temporary files
+*.tmp
+*.log
