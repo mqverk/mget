@@ -37,6 +37,9 @@ sudo apt-get install build-essential libcurl4-openssl-dev libjson-c-dev
 # Fedora
 sudo dnf install gcc make libcurl-devel json-c-devel
 
+# Arch Linux
+sudo pacman -S base-devel curl json-c
+
 # macOS
 brew install curl json-c
 ```
