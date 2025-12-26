@@ -17,7 +17,7 @@ Made and owned by [mqverk](https://github.com/mqverk)
 - GCC or Clang
 - Make
 - libcurl (for HTTP requests)
-- jq or jansson (for JSON parsing)
+- json-c (for JSON parsing)
 
 ## Installation
 
@@ -45,6 +45,21 @@ brew install curl json-c
 ```
 
 ## Compile
+
+```bash
+cd src/
+make
+```
+
+This will compile all source files and create the `mget` executable in the `src/` directory.
+
+To clean up build artifacts:
+
+```bash
+make clean
+```
+
+## Usage
 
 ### Search for plugins
 
@@ -83,14 +98,7 @@ Example output:
 ```
 [ info ] Resolving version for 'luckperms' (v1.21.8, paper)...
 [ info ] Downloading file: LuckPerms-Bukkit-5.5.17.jar
-[ success ] Saved as LuckPerms-Bukkit-5.5.17.ja
-./mget -f luckperms
-```
-
-Download a specific plugin version:
-
-```bash
-./mget -p luckperms -v 1.21.8 -s paper
+[ success ] Saved as LuckPerms-Bukkit-5.5.17.jar
 ```
 
 ### Options
