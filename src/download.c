@@ -2,10 +2,36 @@
 #include <stdlib.h>
 #include <string.h>
 #include <json-c/json.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include "mget.h"
+
+#define DOWNLOADS_DIR "downloads"
+
+// Create downloads directory if it doesn't exist
+static int ensure_downloads_dir(void) {
+    struct stat st = {0};
+    if (stat(DOWNLOADS_DIR, &st) == -1) {
+        if (mkdir(DOWNLOADS_DIR, 0755) == -1) {
+            log_error("Failed to create downloads directory");
+            return 0;
+        }
+    }
+    return 1;
+}
+
+// Build full path for downloaded file
+static void get_file_path(const char *filename, char *filepath, size_t filepath_size) {
+    snprintf(filepath, filepath_size, "%s/%s", DOWNLOADS_DIR, filename);
+}
 
 void download_plugin(const char *slug, const char *version, const char *server_type) {
     char url[MAX_URL_LEN];
+    
+    // Ensure downloads directory exists
+    if (!ensure_downloads_dir()) {
+        return;
+    }
     
     log_info("Resolving version for '%s' (v%s%s%s)...", 
         slug, version, 
@@ -89,8 +115,12 @@ void download_plugin(const char *slug, const char *version, const char *server_t
         return;
     }
 
+    // Build full file path
+    char filepath[MAX_FILENAME + 32];
+    get_file_path(filename, filepath, sizeof(filepath));
+
     // Save file
-    FILE *fp = fopen(filename, "wb");
+    FILE *fp = fopen(filepath, "wb");
     if (!fp) {
         log_error("Failed to open file for writing");
         json_object_put(versions);
@@ -110,7 +140,7 @@ void download_plugin(const char *slug, const char *version, const char *server_t
         return;
     }
 
-    log_success("Saved as %s", filename);
+    log_success("Saved as %s/%s", DOWNLOADS_DIR, filename);
 
     json_object_put(versions);
     free_response(&versions_response);
