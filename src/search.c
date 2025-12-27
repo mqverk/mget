@@ -6,7 +6,8 @@
 
 void search_plugins(const char *query) {
     char url[MAX_URL_LEN];
-    snprintf(url, MAX_URL_LEN, "%s/search?query=%s&facets=[[\"project_type:\"plugin\"]]&limit=10", API_BASE, query);
+    // URL encode the facets parameter: [["project_type:plugin"]]
+    snprintf(url, MAX_URL_LEN, "%s/search?query=%s&facets=%%5B%%5B%%22project_type:plugin%%22%%5D%%5D&limit=10", API_BASE, query);
 
     log_info("Searching Modrinth for '%s'...", query);
 
