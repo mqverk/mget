@@ -1,14 +1,15 @@
 # mget
 
-A fast CLI tool to download Modrinth plugins directly from the terminal using the Modrinth API.
+A fast CLI tool to download Modrinth plugins and mods directly from the terminal using the Modrinth API.
 
 Made and owned by [mqverk](https://github.com/mqverk)
 
 ## Features
 
-- Search for plugins on Modrinth
-- Download specific plugin versions
-- Filter by server type (Paper, Spigot, Bukkit, etc.)
+- Search for plugins and mods on Modrinth
+- Download specific plugin/mod versions
+- Filter plugins by server type (Paper, Spigot, Bukkit, etc.)
+- Filter mods by loader (Forge, Fabric, Neoforge, etc.)
 - Fast and lightweight
 - Written in C
 
@@ -61,7 +62,7 @@ make clean
 
 ## Usage
 
-### Search for plugins
+### Search for projects
 
 ```bash
 ./mget -f luckperms
@@ -88,7 +89,7 @@ Example output:
 [ info ] Found 10 plugins matching 'luckperms'.
 ```
 
-### Download a specific plugin version
+### Download a plugin
 
 ```bash
 ./mget -p luckperms -v 1.21.8 -s paper
@@ -98,15 +99,30 @@ Example output:
 ```
 [ info ] Resolving version for 'luckperms' (v1.21.8, paper)...
 [ info ] Downloading file: LuckPerms-Bukkit-5.5.17.jar
-[ success ] Saved as LuckPerms-Bukkit-5.5.17.jar
+[ success ] Saved as downloads/LuckPerms-Bukkit-5.5.17.jar
+```
+
+### Download a mod
+
+```bash
+./mget -m travelersbackpack -v 1.20.1 -l fabric
+```
+
+Example output:
+```
+[ info ] Resolving version for 'travelersbackpack' (v1.20.1, fabric)...
+[ info ] Downloading file: TravelersBackpack-1.20.1-1.8.10+fabric.jar
+[ success ] Saved as downloads/TravelersBackpack-1.20.1-1.8.10+fabric.jar
 ```
 
 ### Options
 
-- `-f, --find <name>` - Search for a plugin by name
+- `-f, --find <name>` - Search for a project by name
 - `-p, --plugin <slug>` - Plugin slug to download
+- `-m, --mod <slug>` - Mod slug to download
 - `-v, --version <version>` - Target Minecraft version
-- `-s, --server <type>` - Server type (paper, spigot, bukkit, etc.)
+- `-l, --loader <type>` - Mod loader (forge, fabric, neoforge, quilt, etc.)
+- `-s, --server <type>` - Server type for plugins (paper, spigot, bukkit, etc.)
 - `-h, --help` - Show help message
 
 ## Project Structure
